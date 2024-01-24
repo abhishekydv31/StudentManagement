@@ -1,0 +1,221 @@
+﻿@model LoginAndViewData.Models.DashboardViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>StudentDetail</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="StudentId" />
+            <div class="form-group p-3">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" required onblur="validateName()" />
+                <span asp-validation-for="Name"  id="NameValidate" class="text-danger"></span>
+            </div>
+             <script>
+                      function validateName() { 
+                          var isFormValid = true;
+                         var nameInput = document.getElementById("Name");
+                         var nameError = document.getElementById("NameValidate");
+
+                        // Additional custom validation
+                        if (nameInput.value.trim() === "") {
+                            nameError.textContent = "Name cannot be empty!!!!.";
+                            isFormValid = false;
+                        } else {
+                            isFormValid = true;
+                            nameError.textContent = ""; // Clear the error message
+                        }
+
+                        if (/^\s+/.test(nameInput.value)) {
+                            nameError.textContent = "Name cannot start with too many spaces!!!";
+                            isFormValid = false;
+                        }else {
+                            isFormValid = true;
+                            nameError.textContent = ""; // Clear the error message
+                        }
+                      }
+                </script>
+            <div class="form-group p-3">
+                <label asp-for="MobileNo" class="control-label"></label>
+                <input asp-for="MobileNo" class="form-control" id="MobileNo" required onblur="validateMobile()"/>
+                <span asp-validation-for="MobileNo" id="MobileValidate" class="text-danger"></span>
+            </div>
+                 <script>
+                      function validateMobile() { 
+                         var mobileInput = document.getElementById("MobileNo");
+                         var mobileError = document.getElementById("MobileValidate");
+
+                        // Additional custom validation
+                        if (mobileInput.value.trim() === "") {
+                            mobileError.textContent = "Mobile cannot be empty!!!!.";
+                            isFormValid = false;
+                        } else {
+                            isFormValid = true;
+                            mobileError.textContent = ""; // Clear the error message
+                        }
+
+                        if (/^\s+/.test(nameInput.value)) {
+                            isFormValid =false;
+                            nameError.textContent = "Mobile Number cannot start with too many spaces!!!";
+                        }else {
+                            isFormValid = true;
+                            nameError.textContent = ""; // Clear the error message
+                        }
+                      }
+                </script>
+            <div class="form-group p-3">
+                <label asp-for="BloodGroup" class="control-label"></label>
+                @* <input asp-for="BloodGroup" class="form-control" /> *@
+                <select name="BloodGroup" asp-for="BloodGroup" id="myDropdown" asp-items="@ViewBag.BloodGroup" class="form-control">
+                    <option value="@ViewBag.SelectedBloodGroup"></option>
+                </Select>
+                <span asp-validation-for="BloodGroup" id="BloodGroup" class="text-danger"></span>
+            </div>
+            <script>
+                function validateDrop() {
+                    var dropdown = document.getElementById("myDropdown");
+                    var selectedValue = dropdown.options[dropdown.selectedIndex].value;
+                    var dropdownError = document.getElementById("BloodGroup");
+                    if (selectedValue === "") {
+                        dropdownError.textContent = "Please select a value!!!";
+                        return false;
+                    }
+                    return true; 
+                }
+            </script>
+          
+            @* Radio-Button *@
+            <div class="form-group p-3">
+                <label asp-for="Gender" class="control-label"></label>
+                @* <input asp-for="Gender" class="form-control" /> *@
+                @Html.RadioButtonFor(m=>m.Gender,"Male")<label class="form-group">Male</label>
+                @Html.RadioButtonFor(m=>m.Gender,"Female")<label class="form-group">Female</label>
+                <span asp-validation-for="Gender" class="text-danger"></span>
+            </div>
+
+@*              <div class="form-group p-3">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div> *@
+
+            
+            <div class="form-group p-2">
+               <label asp-for="Description" class="control-label">Description</label>    
+               <textarea asp-for="Description" class="control-label" rows="4" onblur="ValidateDescription()" cols="40" placeholder="Describe Yourself..."> </textarea>
+               <span asp-validation-for="Description" id="descriptionValidation" class="text-danger"></span>
+            </div>
+              <script>
+                function validateDescription() { 
+                         var desInput = document.getElementById("description");
+                         var desError = document.getElementById("descriptionValidation");
+
+                        // Additional custom validation
+                        if (desInput.value.trim() === "") {
+                            desError.textContent = "Mobile cannot be empty!!!!.";
+                            isFormValid = false;
+                        } else {
+                            isFormValid = true;
+                            desError.textContent = ""; // Clear the error message
+                        }
+
+                        if (/^\s+/.test(desInput.value)) {
+                            isFormValid =false;
+                            desError.textContent = "Mobile Number cannot start with too many spaces!!!";
+                        }else {
+                            isFormValid = true;
+                            desError.textContent = ""; // Clear the error message
+                        }
+                      }
+            </script>
+            
+            <div class="form-group">
+           <label class="form-label select-label">Select Movies:</label><br></br>
+            <select asp-for="MovieNames" class="form-control"  multiple>
+                    <option value="1">Titanic</option>
+                    <option value="2">Wolf</option>
+                    <option value="3">Swarg</option>
+                    <option value="4">Bagbhan</option>
+                    <option value="5">The Nun</option>
+            </select>
+            </div>
+
+            <div class="form-group form-check">
+        <label asp-for="SubjectNames" class="control-label">Select Subjects:</label>
+           <div>
+
+
+            <input type="checkbox" class="form-check-input" id="English" name="selectedSubject" value="1" onchange="validateCheckboxes()"  @(Model.SubjectNames.Contains("1") ? "checked" : "")>
+            <label for="English">English</label><br>
+
+            <input type="checkbox" class="form-check-input" id="Mathematics" name="selectedSubject" value="2" onchange="validateCheckboxes()" @(Model.SubjectNames.Contains("2") ? "checked" : "")>
+            <label for="Mathematics">Mathematics</label><br>
+
+            <input type="checkbox" class="form-check-input" id="Science" name="selectedSubject" value="3" onchange="validateCheckboxes()"  @(Model.SubjectNames.Contains("3") ? "checked" : "")>
+            <label for="Science">Science</label><br>
+
+            <input type="checkbox" class="form-check-input" id="Social Science" name="selectedSubject"  value="4" onchange="validateCheckboxes()"  @(Model.SubjectNames.Contains("4") ? "checked" : "")>
+            <label for="Social Science">Social Science</label><br>
+
+            <input type="checkbox" class="form-check-input" id="Economics"  name="selectedSubject" value="5" onchange="validateCheckboxes()" @(Model.SubjectNames.Contains("5") ? "checked" : "")>
+            <label for="Economics">Economics</label><br>
+           </div>
+              <script>
+               function validateCheckboxes() {
+                   var checkboxes = document.getElementsByName("selectedSubject");
+                   var checked = false;
+                   var subError = document.getElementById("SubjectNames");
+                   for (var i = 0; i < checkboxes.length; i++) {
+                       if (checkboxes[i].checked) {
+                           checked = true;
+                           break;
+                       }
+                   }
+                   if (!checked) {
+                       alert("Please select at least one subject");
+                       subError.textContent = "Select atleast one option!!!";
+                       return false;
+                   }
+                   return true;
+               }
+           </script>
+            
+            <div class="form-group p-3">
+                <label asp-for="FileName" class="control-label"></label>
+                <input asp-for="FileName" id="FileInput" onchange="validateFile()" class="form-control" />
+                <span asp-validation-for="FileName" id="fileError" class="text-danger"></span>
+            </div>
+            <script>
+                function validateFile() {
+                    var fileInput = document.getElementById("FileInput");
+                    var fileError = document.getElementById("fileError");
+
+                    if (fileInput.files.length === 0) {
+                        fileError.textContent = "Please select a file!!!";
+                        return false;
+                    }
+
+                   
+
+                    fileError.textContent = "";
+                    return true;
+                }
+            </script>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Dashboard">Back to Dashboard</a>
+</div>
+

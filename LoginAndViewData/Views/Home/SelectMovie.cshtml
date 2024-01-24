@@ -1,0 +1,61 @@
+﻿@model LoginAndViewData.Models.MovieViewModel
+<link href="multiselect.css" rel="stylesheet">
+@{
+    ViewData["Title"] = "SelectMovie";
+}
+
+<h1>SelectMovie</h1>
+
+<h4>MovieStudent</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        
+            <form asp-action="SelectMovie" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group p-2">
+                <label asp-for="StudentId" class="control-label"></label>
+                <input asp-for="StudentId" class="form-control" />
+                <span asp-validation-for="StudentId" class="text-danger"></span>
+            </div>
+            <label class="form-label select-label">Select Movies:</label><br></br>
+            <select asp-for="SelectedMovies" class="form-control"  multiple>
+                    <option value="1">Titanic</option>
+                    <option value="2">Wolf</option>
+                    <option value="3">Swarg</option>
+                    <option value="4">Bagbhan</option>
+                    <option value="5">The nun</option>
+            </select>
+            <div class="form-group">
+                <input type="submit" value="Add" class="btn btn-primary" />
+            </div>
+            </form>
+        
+        
+    </div>
+</div>
+@if (ViewBag.ErrorMessage3 != null)
+{
+    <p style="color:red;">@ViewBag.ErrorMessage3</p>
+
+}
+@if(ViewBag.ErrorMessage!=null){
+   <p style="color:red;">@ViewBag.ErrorMessage</p> 
+}
+@if (ViewBag.ErrorMessage2 != null)
+{
+    <p style="color:red;">@ViewBag.ErrorMessage2</p>
+}
+@if (ViewBag.ModelStateErrors!=null)
+{
+    <p style="color:red;">@ViewBag.ModelStateErrors okkk</p>
+}
+@if (ViewBag.trial != null)
+{
+    <p style="color:red;">@ViewBag.trial</p>
+}
+
+<div>
+    <a asp-action="Dashboard">Back to List</a>
+</div>
+

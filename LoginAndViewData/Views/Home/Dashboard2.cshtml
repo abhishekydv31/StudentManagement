@@ -1,0 +1,77 @@
+﻿@model IEnumerable<LoginAndViewData.Models.StudentDetail>
+
+@{
+    ViewData["Title"] = "Dashboard2";
+}
+
+<h1>Dashboard</h1>
+<p>
+    <h2>@ViewBag.MySession</h2>
+    <button class="btn btn-primary m-5"><a asp-controller="Home" asp-action="Logout" style="color:white;">Logout</a></button>
+    <button class="btn btn-primary m-5"><a asp-controller="Home" asp-action="SelectSubject" style="color:white;">Select Your Subject</a></button>
+    <button class="btn btn-primary m-5"><a asp-action="CreateStudent" style="color:white;">Create</a></button>
+    <button class="btn btn-primary m-5"><a asp-action="SelectMovie" style="color:white;">Choose your Fav Movies</a></button>
+    <button class="btn btn-primary m-5"><a asp-action="ListOfSelectedSubject" style="color:white;">List Of Selected Subjects</a></button>
+    <button class="btn btn-primary m-5"><a asp-action="ListOfMovieSelected" style="color:white;">List Of Selected Movies</a></button>
+    <button class="btn btn-primary m-5"><a asp-action="Dashboard" style="color:white;">Dashboard</a></button>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MobileNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BloodGroup)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FileName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MobileNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BloodGroup)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gender)
+            </td>
+                <td>
+                @Html.DisplayFor(modelItem => item.Description)
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FileName)
+            </td>
+            <td>
+                    <button class="btn btn-success"><a asp-action="Edit" asp-controller="Home" asp-route-id="@item.StudentId" style="color:white;">Edit</a> |</button>
+                    <button class="btn btn-danger"><a asp-action="Delete"  asp-route-id="@item.StudentId" style="color:white;">Delete</a></button>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

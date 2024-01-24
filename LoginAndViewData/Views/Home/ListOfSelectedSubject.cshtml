@@ -1,0 +1,26 @@
+﻿@* @model List<SubjectStudent> *@
+@{
+    ViewData["Title"] = "ListOfSelectedSubject";
+}
+
+<h1>ListOfSelectedSubject</h1>
+
+<table class="table">
+    <thead>
+        <th>Student Id</th>
+        <th>Subject Name</th>
+    </thead>
+    <tbody>
+        @foreach(var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.StudentId
+                </td>
+                <td>
+                    @item.SubjectName
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,98 @@
+﻿@model LoginAndViewData.Models.StudentLogin
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h1>Login</h1>
+
+<h4>StudentLogin</h4>
+<hr />
+
+@{
+    if (ViewBag.ErrorMessage1 != null)
+    {
+        <p style="color:red;">@ViewBag.ErrorMessage1</p>
+    }
+}
+@{
+    if (ViewBag.ErrorMessage2 != null)
+    {
+        <p style="color:red;">@ViewBag.ErrorMessage2</p>
+    }
+}
+
+<div class="row">
+    <div class="col-md-4 ml-3">
+        <form asp-action="Login" class="form-control">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+           
+            <div class="form-group">
+                <label asp-for="Username" class="control-label"></label>
+                <input asp-for="Username" class="form-control" id="username" required onblur="validateUsername()" />
+                <span asp-validation-for="Username" id="usernameValidation" class="text-danger"></span>
+            </div>
+            <script>
+                function validateUsername() {
+                    var isFormValid = true;
+                    var nameInput = document.getElementById("username");
+                    var nameError = document.getElementById("usernameValidation");
+
+                    // Additional custom validation
+                    if (nameInput.value.trim() === "") {
+                        nameError.textContent = "Userame cannot be empty!!!!.";
+                        isFormValid = false;
+                    } else {
+                        isFormValid = true;
+                        nameError.textContent = ""; // Clear the error message
+                    }
+
+                    if (/^\s+/.test(nameInput.value)) {
+                        nameError.textContent = "Username cannot start with too many spaces!!!";
+                        isFormValid = false;
+                    } else {
+                        isFormValid = true;
+                        nameError.textContent = ""; // Clear the error message
+                    }
+                }
+            </script>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" type="password" id="Passwordinput" class="form-control" required onblur="validatePassword()"/>
+                <span asp-validation-for="Password" id="passwordValidation" class="text-danger"></span>
+            </div>
+            <script>
+                function validatePassword() {
+                    var isFormValid = true;
+                    var passInput = document.getElementById("Passwordinput");
+                    var passError = document.getElementById("passwordValidation");
+
+                  
+                    if (passInput.value.trim() === "") {
+                        passError.textContent = "Password cannot be empty!!!!.";
+                        isFormValid = false;
+                    } else {
+                        isFormValid = true;
+                        passError.textContent = "";                     }
+
+                    if (/^\s+/.test(passInput.value)) {
+                        passError.textContent = "Password cannot start with too many spaces!!!";
+                        isFormValid = false;
+                    } else {
+                        isFormValid = true;
+                        passError.textContent = ""; 
+                    }
+                }
+            </script>
+            <div class="form-group">
+                <input type="submit" value="Login" class="btn btn-primary m-3" />
+            </div>
+        </form>
+    </div>
+    
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

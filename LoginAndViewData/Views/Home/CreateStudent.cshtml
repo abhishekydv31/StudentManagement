@@ -1,0 +1,112 @@
+﻿@model LoginAndViewData.Models.StudentViewModel
+
+@{
+    ViewData["Title"] = "CreateStudent";
+}
+
+<h1>CreateStudent</h1>
+
+<h4>StudentDetail</h4>
+<hr/>
+<div class="row">
+    <div class="col-md-4">
+        <form onsubmit="return validateForm()" enctype="multipart/form-data" asp-action="CreateStudent" name="myForm" class="form-control">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group p-2">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" id="Name" onfocusout="" name="Name" class="form-control" />
+                <span asp-validation-for="Name" id="NameValidate" class="text-danger"></span>
+            </div>
+            <div class="form-group p-2">
+                <label asp-for="MobileNo" id="MobileNo" onKeyUp="checkInput()" class="control-label"></label>
+                <input asp-for="MobileNo" class="form-control" />
+                <span asp-validation-for="MobileNo" class="text-danger"></span>
+            </div>
+
+            <div class="form-group p-2">
+              <label class="form-label" asp-for="BloodGroup">Select Your Blood Group:</label>
+              <select name="BloodGroup" asp-items="@Model.BloodGroups" class="form-control">
+                  <option value="">Select BloodGroup</option>   
+              </Select>
+              <span asp-validation-for="BloodGroup" class="text-danger"></span>
+            </div>
+
+            <div class="form-group p-2">
+                <label asp-for="Gender" class="control-label"></label>
+                @Html.RadioButtonFor(m=>m.Gender,"Male")<label class="form-group">Male</label>
+                @Html.RadioButtonFor(m=>m.Gender,"Female")<label class="form-group">Female</label>
+                <span asp-validation-for="Gender" class="text-danger"></span>
+            </div>
+
+            <div class="form-group p-2">
+               <label asp-for="Description" class="control-label">Description</label>    
+               <textarea asp-for="Description" class="control-label" rows="4" cols="40" placeholder="Describe Yourself..."> </textarea>
+               <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="form-group p-2">
+                <label for="Photo" class="control-label"></label>
+               <div class="col-sm-10">
+                   <div class="custom-file">
+                       <input for="Photo" type="file" name="file" class="form-control custom-file-input"/>
+                       @* <input type="text" placeholder="Filename" class="custom-input-filename" asp-for="FileName" readonly></input> *@
+                       <label asp-for="FileName" class="custom-file-label">Choose File...</label>
+                         <span asp-validation-for="FileName" class="text-danger"></span>
+                   </div>
+                </div>
+            </div>
+            <div class="form-group p-2">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+            @SectionWriters Script{
+              <script>
+                              $(document).ready(function () { 
+                $('.custom-file-input').on("change", function () {
+                    var filename = $(this).val().split("\\").pop();
+                    $(this).next('.custom-file-label').html(filename);
+                    // $(this).next('.custom-input-filename').html(filename);
+                });
+              })</script>
+            };
+        </form>
+        <script>
+            function validateForm() {
+                let x = document.forms["myForm"]["Name"].value;
+                if (x == ' ') { 
+                    document.getElementById("NameValidate").innerHTML="Please Enter your Name..."
+                    return false;
+                }
+            }
+        </script>
+        @* @if (ViewBag.errorMessage != null)
+        {
+            @foreach (var error in ViewBag.errorMessage)
+            {
+                <li>@error</li>
+            }
+           
+        } *@
+        @if (ViewBag.errorMessage1 != null)
+        {
+           <p style="color:red;">@ViewBag.errorMessage1</p>
+           
+        }
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+              
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+     <script>
+            $(document).ready(function () {
+                $('.custom-file-input').on("change", function () {
+                    var filename = $(this).val().split("\\").pop();
+                    $(this).next('.custom-file-label').html(filename);
+                });
+})
+        </script>
+}

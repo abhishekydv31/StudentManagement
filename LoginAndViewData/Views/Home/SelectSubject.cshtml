@@ -1,0 +1,42 @@
+﻿@model LoginAndViewData.Models.SubjectStudent
+@{
+    ViewData["Title"] = "SelectSubject";
+}
+
+<h1>SelectSubject</h1>
+
+<form asp-action="SelectSubject" class="form-control" method="post">
+    <div class="form-group form-check">
+        <label class="control-label">Select Subjects:</label>
+           <div>
+
+            <label asp-for="StudentId">Enter StudentId:</label><br>
+            <input type="textbox" asp-for="StudentId" class="form-control" id="StudentId"></input>
+
+            <input type="checkbox" class="form-check-input" id="English" name="selectedSubject" value="1">
+            <label for="English">English</label><br>
+
+            <input type="checkbox" class="form-check-input" id="Mathematics" name="selectedSubject" value="2">
+            <label for="Mathematics">Mathematics</label><br>
+
+            <input type="checkbox" class="form-check-input" id="Science" name="selectedSubject" value="3">
+            <label for="Science">Science</label><br>
+
+            <input type="checkbox" class="form-check-input" id="Social Science" name="selectedSubject"  value="4">
+            <label for="Social Science">Social Science</label><br>
+
+            <input type="checkbox" class="form-check-input" id="Economics"  name="selectedSubject" value="5">
+            <label for="Economics">Economics</label><br>
+           </div>
+           <div class="form-group">
+               <button class="btn btn-primary"><input type="submit" value="Submit"></input></button>
+           </div>
+        @{
+            if (ViewBag.ErrorMessage != null)
+            {
+                <p style="color:red;">@ViewBag.ErrorMessage</p>
+            }
+        }
+    </div>
+</form>
+

@@ -1,0 +1,27 @@
+﻿@* @model LoginAndViewData.Models.MovieStudent *@
+
+@{
+    ViewData["Title"] = "ListOfMovieSelected";
+}
+
+<h1>ListOfSelectedSubject</h1>
+<button class="btn btn-primary"><a asp-action="Dashboard2" style="color:white;">Go Back!</a></button>
+<table class="table">
+    <thead>
+    <th>Student Id</th>
+    <th>Movie Name</th>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.StudentId
+                </td>
+                <td>
+                    @item.MovieName
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
